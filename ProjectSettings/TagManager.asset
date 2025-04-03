@@ -17,6 +17,11 @@ TagManager:
   - egg
   - panelWin
   - square
+  - circle
+  - green
+  - coin
+  - checkpoint
+  - green2
   layers:
   - Default
   - TransparentFX
