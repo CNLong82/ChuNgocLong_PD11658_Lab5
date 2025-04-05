@@ -1,9 +1,14 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class FarmerController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Image healthBar; 
+    public float maxHealth = 1f;
+    public float currentHealth = 0.5f; 
+    public float healAmount = 0.1f;
     public TMP_Text Score;
     public float countScore = 0;
     private Rigidbody2D rb;
@@ -14,6 +19,9 @@ public class FarmerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = rb.GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        animator = rb.GetComponent<Animator>();
+        UpdateHealthUI();
     }
 
     // Update is called once per frame
@@ -47,6 +55,14 @@ public class FarmerController : MonoBehaviour
         {
             countScore++;
             Score.text = "Score: " + countScore;
+
+            if (currentHealth < maxHealth)
+            {
+                currentHealth += healAmount;
+                if (currentHealth > maxHealth) currentHealth = maxHealth;
+                UpdateHealthUI();
+            }
+
             var name = other.attachedRigidbody.name;
             Destroy(GameObject.Find(name));
 
@@ -57,6 +73,11 @@ public class FarmerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    void UpdateHealthUI()
+    {
+        healthBar.fillAmount = currentHealth / maxHealth;
     }
 
     public void RestartGame()
